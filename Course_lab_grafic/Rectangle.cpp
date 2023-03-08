@@ -2,7 +2,7 @@
 
 Rectangle::Rectangle()
 {
-	rectangle = RectangleShape(Vector2f(100, 50));
+	rectangle = RectangleShape(Vector2f(170, 100));
 	this->color = Color::Magenta;
 	rectangle.setFillColor(color);
 }
@@ -27,10 +27,24 @@ void Rectangle::set_color(Color color)
 
 void Rectangle::move(float x, float y)
 {
+	area_x = area_x + x;
+	area_y = area_y + y;
+	rectangle.setPosition(area_x, area_y);
 }
 
 Figure* Rectangle::clone()
 {
 	return new Rectangle(*this);
+}
+
+void Rectangle::set_as_active()
+{
+	rectangle.setOutlineThickness(4);
+	rectangle.setOutlineColor(Color::Red);
+}
+
+void Rectangle::set_as_unactive()
+{
+	rectangle.setOutlineColor(Color::Transparent);
 }
  

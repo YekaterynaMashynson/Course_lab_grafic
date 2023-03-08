@@ -113,7 +113,20 @@ void Controller_scena::handle_keyboard_actions(RenderWindow& window /*,*/ /*Figu
 	{
 		add_from_concole();
 	}
-	draw_figures(window);
+	if (!is_empty()) 
+	{
+
+		if (flags.left_flag)
+			container[curr_figure]->move(-SMOOTH_DISTANCE, 0);
+		if (flags.right_flag)
+			container[curr_figure]->move(SMOOTH_DISTANCE, 0);
+		if (flags.up_flag)
+			container[curr_figure]->move(0, -SMOOTH_DISTANCE);
+		if (flags.down_flag)
+			container[curr_figure]->move(0, SMOOTH_DISTANCE);
+		draw_figures(window);
+	}
+	
 }
 void Controller_scena::print_menu() 
 {
@@ -155,6 +168,16 @@ void Controller_scena::add_from_concole()
 		break;
 	}
 	container.push_back(new_figure);
+	curr_figure = container.size() - 1;
+	container[curr_figure]->set_as_active();
+	if (container.size() > 1) {
+		container[curr_figure - 1]->set_as_unactive();
+	}
 	//function - set as an active and current selected
 	cout << "--------------------------" << endl;
+}
+
+bool Controller_scena::is_empty()
+{
+	return container.size() < 1;
 }

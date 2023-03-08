@@ -14,5 +14,7 @@ public:
 	virtual void set_color(Color color) = 0;
 	// Клонирование фигуры (паттерн - Прототип)
 	virtual Figure* clone() = 0;
+	virtual void set_as_active() = 0;
+	virtual void set_as_unactive() = 0;
 };
 

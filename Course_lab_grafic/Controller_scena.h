@@ -4,6 +4,8 @@
 #include "Figure.h"
 
 using namespace sf;
+using namespace std;
+const float SMOOTH_DISTANCE = 0.1;
 class Controller_scena
 {
 
@@ -16,6 +18,7 @@ private:
 	Controller_scena(Controller_scena const&) = delete;
 	Keyboard_flag flags;
 	vector<Figure*> container;
+	int curr_figure = -1;
 public:
 	//Singletone
 	static Controller_scena& get_controler();
@@ -37,6 +40,8 @@ public:
 	void draw_figures(RenderWindow& window);
 	////
 	void add_from_concole();
+	//// 
+	bool is_empty();
 
 
 };

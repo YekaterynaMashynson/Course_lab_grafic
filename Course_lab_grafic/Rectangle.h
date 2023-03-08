@@ -15,5 +15,7 @@ public:
 	void set_color(Color color)override;
 	void move(float x, float y) override;
 	Figure* clone() override;
+	void set_as_active()override;
+	void set_as_unactive()override;
 };
 

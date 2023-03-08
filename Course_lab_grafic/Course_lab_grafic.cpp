@@ -5,22 +5,25 @@
 #include"SFML/Graphics.hpp"
 #include"Controller_scena.h"
 
+
 using namespace sf;
 int main()
 {
-   /* RenderWindow window(VideoMode(750, 500), "Mashynson course work");
-	Controller_scena& contr = Controller_scena::get_controler();*/
-	std::cout << "text";
-	/*contr.print_menu(); */
-	//while (window.isOpen()) 
-	//{
-	//	Event ev;
-	//	while (window.pollEvent(ev))
-	//	{
-	//		contr.handle_events(ev, window);
-	//	}
-	//	contr.handle_keyboard_actions(window);
-	//}
+   RenderWindow window(VideoMode(750, 500), "Mashynson course work");
+	Controller_scena& contr = Controller_scena::get_controler();
+	contr.print_menu();
+
+	while (window.isOpen())
+	{
+		Event ev;
+		while (window.pollEvent(ev))
+		{
+			contr.handle_events(ev, window);
+		}
+		contr.handle_keyboard_actions(window);
+
+		window.display();
+	}
 	return 0;
   
 }
