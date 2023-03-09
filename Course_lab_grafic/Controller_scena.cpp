@@ -124,6 +124,10 @@ void Controller_scena::handle_keyboard_actions(RenderWindow& window /*,*/ /*Figu
 			container[curr_figure]->move(0, -SMOOTH_DISTANCE);
 		if (flags.down_flag)
 			container[curr_figure]->move(0, SMOOTH_DISTANCE);
+		if (flags.change_color_flag) 
+		{
+			set_color_from_console();
+		}
 		draw_figures(window);
 	}
 	
@@ -143,6 +147,7 @@ void Controller_scena::print_menu()
 
 void Controller_scena::draw_figures(RenderWindow& window)
 {
+	window.clear(Color::White);
 	for (auto& shape : container) 
 	{
 		shape->draw(window);
@@ -180,4 +185,26 @@ void Controller_scena::add_from_concole()
 bool Controller_scena::is_empty()
 {
 	return container.size() < 1;
+}
+
+void Controller_scena::set_color_from_console()
+{
+	cout << "0 - Black\n1 - Cyan\n2 - Yellow\n3 - Green\n4 - Blue\nChoose color: ";
+
+	int color_choice;
+	cin >> color_choice;
+
+	Color color;
+	switch (color_choice)
+	{
+	case 0: color =  Color(Color::Black); break;
+	case 1: color = Color(Color::Cyan); break;
+	case 2: color =  Color(Color::Yellow); break;
+	case 3: color = Color(Color::Green); break;
+	case 4: color = Color(Color::Blue); break;
+	default:
+		color =  Color(Color::Black); break;
+	}
+	container[curr_figure]->set_color(color);
+
 }

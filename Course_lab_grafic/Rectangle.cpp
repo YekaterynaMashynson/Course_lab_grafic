@@ -16,6 +16,7 @@ Rectangle::Rectangle(float width, float hight, Color color)
 
 void Rectangle::draw(RenderWindow& window)
 {
+	/*window.clear(Color::White);*/
 	window.draw(rectangle);
 }
 

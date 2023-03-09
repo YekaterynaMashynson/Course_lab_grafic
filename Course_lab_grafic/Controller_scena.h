@@ -42,6 +42,8 @@ public:
 	void add_from_concole();
 	//// 
 	bool is_empty();
+	///
+	void set_color_from_console();
 
 
 };
