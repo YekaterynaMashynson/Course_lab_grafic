@@ -10,10 +10,10 @@ protected:
 public:
 	virtual void draw(RenderWindow& window) = 0;
 	virtual void move(float x, float y) = 0;
-	//virtual void setOutline(float thickness, Color color) = 0;
 	virtual void set_color(Color color) = 0;
-	// Клонирование фигуры (паттерн - Прототип)
+	// Figure cloning ( Prototype)
 	virtual Figure* clone() = 0;
+	/// 
 	virtual void set_as_active() = 0;
 	virtual void set_as_unactive() = 0;
 };

@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Circle.cpp" />
+    <ClCompile Include="Composite.cpp" />
     <ClCompile Include="Controller_scena.cpp" />
     <ClCompile Include="Course_lab_grafic.cpp" />
     <ClCompile Include="Figure.cpp" />
@@ -150,6 +151,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Circle.h" />
+    <ClInclude Include="Composite.h" />
     <ClInclude Include="Controller_scena.h" />
     <ClInclude Include="Figure.h" />
     <ClInclude Include="Keyboard_flag.h" />

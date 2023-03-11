@@ -5,8 +5,8 @@ using namespace sf;
 class Rectangle:public Figure
 {
 private:
-    float width;
-    float height;
+    float width=0;
+    float height=0;
     RectangleShape rectangle;
 public:
 	Rectangle();
@@ -17,5 +17,7 @@ public:
 	Figure* clone() override;
 	void set_as_active()override;
 	void set_as_unactive()override;
+	float check_x(float x, float width);
+	float check_y(float y, float height);
 };
 

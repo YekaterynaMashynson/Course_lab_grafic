@@ -7,6 +7,7 @@ class Circle:public Figure
 {
 protected:
 	CircleShape circle;
+	float radius;
 public:
 	Circle();
 	Circle(float radius, Color color);
@@ -16,5 +17,7 @@ public:
 	Figure* clone() override;
 	void set_as_active()override;
 	void set_as_unactive()override;
+	float check_x(float x,float width);
+	float check_y(float y, float height);
 };
 
