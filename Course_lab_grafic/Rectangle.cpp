@@ -66,4 +66,3 @@ float Rectangle::check_y(float y, float height)
 	if (y > 500) return 0 - height;
 	return y;
 }
- 

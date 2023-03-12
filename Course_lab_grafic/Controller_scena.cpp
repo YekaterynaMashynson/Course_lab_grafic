@@ -1,6 +1,7 @@
 #include "Controller_scena.h"
 #include "Circle.h"
 #include "Rectangle.h"
+#include "Line.h"
 #include<iostream>
 using namespace std;
 
@@ -158,7 +159,7 @@ void Controller_scena::add_from_concole()
 {
 	cout << "0 - Circle\n"
 		<< "1 - Rectangle\n"
-		<< "2 - Rhombus\n"
+		<< "2 - Line\n"
 		<< "Choose the figure u want to add: ";
 	int choice;
 	cin >> choice;
@@ -168,6 +169,7 @@ void Controller_scena::add_from_concole()
 		//add posipility to chose color and size from concole
 	case 0: new_figure = new Circle(); break;
 	case 1:new_figure = new Rectangle(); break;
+	case 2: new_figure = new Line(); break;
 	default:
 		cout << "Incorrect figure";
 		break;

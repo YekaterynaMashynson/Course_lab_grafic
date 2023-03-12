@@ -144,6 +144,7 @@
     <ClCompile Include="Controller_scena.cpp" />
     <ClCompile Include="Course_lab_grafic.cpp" />
     <ClCompile Include="Figure.cpp" />
+    <ClCompile Include="Line.cpp" />
     <ClCompile Include="Rectangle.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -155,6 +156,7 @@
     <ClInclude Include="Controller_scena.h" />
     <ClInclude Include="Figure.h" />
     <ClInclude Include="Keyboard_flag.h" />
+    <ClInclude Include="Line.h" />
     <ClInclude Include="Rectangle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
