@@ -1,8 +1,11 @@
 #include "Circle.h"
+#include <iostream>
 //default circle
+using namespace std;
+
 Circle::Circle()
 {
-	circle = CircleShape(100.0f);
+	circle = CircleShape(50.0f);
 	this->color = Color::Cyan;
 	this->radius = 100.0f;
 	circle.setFillColor(color);
@@ -62,4 +65,24 @@ float Circle::check_y(float y, float height)
 	if (y < 0 - height) return 500;
 	if (y > 500) return 0-height;
 	return y;
+}
+
+void Circle::set_size()
+{
+	float new_radius;
+	cout << "Enter radius = ";
+	cin >> new_radius;
+	circle.setRadius(new_radius);
+	radius = circle.getRadius();
+	/*circle.setScale(2,2);*//*setScale(circle.getScale() + sf::Vector2f(0.0001f, 0.0001f));*/
+}
+
+float Circle::get_x()
+{
+	return area_x;
+}
+
+float Circle::get_y()
+{
+	return area_y;
 }

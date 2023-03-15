@@ -15,8 +15,10 @@ public:
 	bool change_size_flag = false; //3
 	bool change_color_flag = false; //4
 
-	bool drawing_mode_on = false; //5 on //6 off
+	bool create_prototype = false; //5 on //6 off
 
 	bool previous_state_loaded = false; //7
 	bool load_key_pressed = false;
+	 
+	bool unite_in_agregate = false;
 };

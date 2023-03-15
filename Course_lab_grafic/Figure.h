@@ -11,6 +11,9 @@ public:
 	virtual void draw(RenderWindow& window) = 0;
 	virtual void move(float x, float y) = 0;
 	virtual void set_color(Color color) = 0;
+	virtual void set_size() = 0;
+	virtual float get_x() = 0;
+	virtual float get_y() = 0;
 	// Figure cloning ( Prototype)
 	virtual Figure* clone() = 0;
 	/// 

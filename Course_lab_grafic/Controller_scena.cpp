@@ -2,6 +2,7 @@
 #include "Circle.h"
 #include "Rectangle.h"
 #include "Line.h"
+#include "Composite.h"
 #include<iostream>
 using namespace std;
 
@@ -21,13 +22,15 @@ void Controller_scena::handle_key_released(Event& event)
 	case sf::Keyboard::Left:    flags.left_flag = false; break;
 	case sf::Keyboard::Right:    flags.right_flag = false; break;
 
+	case sf::Keyboard::A:		flags.unite_in_agregate = false; break;
 		//add
-	case sf::Keyboard::Num0:     flags.add_flag = false; break;
+	/*case sf::Keyboard::Num0:     flags.add_flag = false; break;
+	case sf::Keyboard::Num5:    flags.drawing_mode_on = false; break;*/
 		//switchNext
 	case sf::Keyboard::Num1: 
 	{
 		flags.switch_next_key_pressed = false;
-		flags.switched = false;
+		flags.switched = false; 
 		break;
 	}
 	default: break;
@@ -37,6 +40,8 @@ void Controller_scena::handle_key_released(Event& event)
 	case sf::Keyboard::Num3:     flags.change_size_flag = false; break;
 		//changeColor
 	case sf::Keyboard::Num4:    flags.change_color_flag = false; break;
+		///
+
 		//load state
 	case sf::Keyboard::Num7: {
 		flags.load_key_pressed = false;
@@ -70,11 +75,11 @@ void Controller_scena::handle_key_pressed(Event& event, RenderWindow& window)
 		//changeColor
 	case sf::Keyboard::Num4:    flags.change_color_flag = true; break;
 		//drawingMode on
-	case sf::Keyboard::Num5:    flags.drawing_mode_on = true; break;
-		//drawingMode off
-	case sf::Keyboard::Num6:    flags.drawing_mode_on = false; break;
+	case sf::Keyboard::Num5:    flags.create_prototype = true; break;
 		//load state
 	case sf::Keyboard::Num7:    flags.load_key_pressed = true; break;
+
+	case sf::Keyboard::A:		flags.unite_in_agregate = true; break;
 	default: break;
 	}
 }
@@ -83,6 +88,7 @@ void Controller_scena::handle_drawing_mode(RenderWindow& window)
 {
 
 }
+
 void Controller_scena::handle_events(Event& event, RenderWindow& window) 
 {
 	switch (event.type)
@@ -108,15 +114,17 @@ void Controller_scena::handle_events(Event& event, RenderWindow& window)
 		break;
 	}
 }
+
 void Controller_scena::handle_keyboard_actions(RenderWindow& window /*,*/ /*FigureContainer* container, MementoList* mementos*/) 
 {
 	if (flags.add_flag) 
 	{
 		add_from_concole();
+		flags.add_flag = false;
 	}
 	if (!is_empty()) 
 	{
-
+		//изменить клонирование фигуры
 		if (flags.left_flag)
 			container[curr_figure]->move(-SMOOTH_DISTANCE, 0);
 		if (flags.right_flag)
@@ -125,14 +133,34 @@ void Controller_scena::handle_keyboard_actions(RenderWindow& window /*,*/ /*Figu
 			container[curr_figure]->move(0, -SMOOTH_DISTANCE);
 		if (flags.down_flag)
 			container[curr_figure]->move(0, SMOOTH_DISTANCE);
+
+		if (flags.create_prototype)
+		{
+			create_prototype_of_active_figure();
+			flags.create_prototype = false;
+		}
+
+		if (flags.change_size_flag) 
+		{
+			set_size_from_console();
+			flags.change_size_flag = false;
+		}
+			
+		if (flags.create_multiple_shape_flag) 
+		{
+			create_agregate();
+			flags.create_multiple_shape_flag = false;
+		}
 		if (flags.change_color_flag) 
 		{
 			set_color_from_console();
+			flags.change_color_flag = false;
 		}
 		draw_figures(window);
 	}
 	
 }
+
 void Controller_scena::print_menu() 
 {
 	cout << "Up, Down, Left, Right - arrows\n"
@@ -141,7 +169,7 @@ void Controller_scena::print_menu()
 		<< "Unite shapes - 2\n"
 		<< "Change size - 3\n"
 		<< "Change color - 4\n"
-		<< "Drawing Mode On - 5\n"
+		<< "Clone active figure - 5\n"
 		<< "Drawing Mode Off - 6\n"
 		<< "Load previous state - 7\n";
 }
@@ -209,4 +237,32 @@ void Controller_scena::set_color_from_console()
 	}
 	container[curr_figure]->set_color(color);
 
+}
+
+void Controller_scena::set_size_from_console()
+{
+	container[curr_figure]->set_size();
+}
+
+void Controller_scena::create_prototype_of_active_figure()
+{
+	Figure* clone_figure = container[curr_figure]->clone();
+	container.push_back(clone_figure);
+	container[curr_figure]->set_as_unactive();
+	curr_figure = container.size() - 1;
+	container[curr_figure]->set_as_active();
+	cout << "--------------------------" << endl;
+}
+
+void Controller_scena::create_agregate()
+{
+	Composite* new_comp = new Composite();
+	for (auto& shape : container)
+	{
+		new_comp->add_figure(shape);
+	}
+	container.erase(container.begin(), container.end());
+	container.push_back(new_comp);
+	curr_figure = container.size() - 1;
+	container[curr_figure]->set_as_active();
 }

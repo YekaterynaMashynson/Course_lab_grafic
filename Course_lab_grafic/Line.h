@@ -18,5 +18,8 @@ public:
 	void set_as_unactive()override;
 	float check_x(float x, float width);
 	float check_y(float y, float height);
+	void set_size()override;
+	float get_x()override;
+	float get_y()override;
 };
 

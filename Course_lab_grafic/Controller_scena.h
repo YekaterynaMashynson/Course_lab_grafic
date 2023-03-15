@@ -44,6 +44,11 @@ public:
 	bool is_empty();
 	///
 	void set_color_from_console();
-
+	///  
+	void set_size_from_console();
+	///
+	void create_prototype_of_active_figure();
+	////
+	void create_agregate();
 
 };

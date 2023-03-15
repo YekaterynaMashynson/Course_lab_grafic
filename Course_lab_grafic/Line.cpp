@@ -1,11 +1,13 @@
 #include "Line.h"
+#include <iostream>
+using namespace std;
 
 Line::Line()
 {
 	line = RectangleShape(Vector2f(170, 4));
-	this->length = 170;
+	this->length = 190;
 	this->width = 4;
-	line.setFillColor(Color::Magenta);
+	line.setFillColor(Color::Green);
 }
 
 Line::Line(float length, float width, Color color)
@@ -61,4 +63,27 @@ float Line::check_y(float y, float width)
 	if (y < 0 - width) return 500;
 	if (y > 500) return 0 - width;
 	return y;
+}
+
+void Line::set_size()
+{
+	float new_length;
+	float new_width;
+	cout << "Enter line length = ";
+	cin >> new_length;
+	cout << "Enter line thickness = ";
+	cin >> new_width;
+	line.setSize(Vector2f(new_length, new_width));
+	length = new_length;
+	width = new_width;
+}
+
+float Line::get_x()
+{
+	return area_x;
+}
+
+float Line::get_y()
+{
+	return area_y;
 }

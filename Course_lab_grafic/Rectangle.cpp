@@ -1,5 +1,7 @@
 #include "Rectangle.h"
+#include <iostream>
 
+using namespace std;
 Rectangle::Rectangle()
 {
 	rectangle = RectangleShape(Vector2f(170, 100));
@@ -65,4 +67,27 @@ float Rectangle::check_y(float y, float height)
 	if (y < 0 - height) return 500;
 	if (y > 500) return 0 - height;
 	return y;
+}
+
+void Rectangle::set_size()
+{
+	float new_height;
+	float new_width;
+	cout << "Enter rectangle width = ";
+	cin >> new_width;
+	cout << "Enter rectangle height = ";
+	cin >> new_height;
+	rectangle.setSize(Vector2f(new_width, new_height));
+	height = new_height;
+	width = new_width;
+}
+
+float Rectangle::get_x()
+{
+	return area_x;
+}
+
+float Rectangle::get_y()
+{
+	return area_y;
 }

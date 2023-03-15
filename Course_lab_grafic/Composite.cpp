@@ -5,6 +5,23 @@ Composite::Composite()
 	composite_figure = vector<Figure*>();
 }
 
+Composite::Composite(vector<Figure*> agg)
+{
+	for (auto& shape : agg) 
+	{
+		add_figure(shape);
+	}
+}
+
+Composite::Composite(const Composite& obj)
+{ 
+	this->composite_figure = vector<Figure*>();
+	for (auto& shape : obj.composite_figure)
+	{
+		add_figure(shape->clone());
+	}
+}
+
 Composite::~Composite()
 {
 	for (int index = 0; index < composite_figure.size(); ++index)
@@ -56,5 +73,28 @@ void Composite::set_as_unactive()
 void Composite::add_figure(Figure* figure)
 {
 	composite_figure.push_back(figure);
+}
+
+Figure* Composite::clone()
+{
+	return new Composite(*this);
+}
+
+void Composite::set_size()
+{
+	for (auto& shape : composite_figure)
+	{
+		shape->set_size();
+	}
+}
+
+float Composite::get_x()
+{
+	return area_x;
+}
+
+float Composite::get_y()
+{
+	return area_y;
 }
 
