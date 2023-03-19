@@ -3,6 +3,7 @@
 #include "Rectangle.h"
 #include "Line.h"
 #include "Composite.h"
+#include "Memento_handler.h"
 #include<iostream>
 using namespace std;
 
@@ -22,7 +23,7 @@ void Controller_scena::handle_key_released(Event& event)
 	case sf::Keyboard::Left:    flags.left_flag = false; break;
 	case sf::Keyboard::Right:    flags.right_flag = false; break;
 
-	case sf::Keyboard::A:		flags.unite_in_agregate = false; break;
+	case sf::Keyboard::A:		flags.serialize_figures = false; break;
 		//add
 	/*case sf::Keyboard::Num0:     flags.add_flag = false; break;
 	case sf::Keyboard::Num5:    flags.drawing_mode_on = false; break;*/
@@ -79,14 +80,9 @@ void Controller_scena::handle_key_pressed(Event& event, RenderWindow& window)
 		//load state
 	case sf::Keyboard::Num7:    flags.load_key_pressed = true; break;
 
-	case sf::Keyboard::A:		flags.unite_in_agregate = true; break;
+	case sf::Keyboard::A:		flags.serialize_figures = true; break;
 	default: break;
 	}
-}
-
-void Controller_scena::handle_drawing_mode(RenderWindow& window) 
-{
-
 }
 
 void Controller_scena::handle_events(Event& event, RenderWindow& window) 
@@ -120,6 +116,7 @@ void Controller_scena::handle_keyboard_actions(RenderWindow& window /*,*/ /*Figu
 	if (flags.add_flag) 
 	{
 		add_from_concole();
+		Memento_handler::save(container,container_memento );
 		flags.add_flag = false;
 	}
 	if (!is_empty()) 
@@ -136,23 +133,32 @@ void Controller_scena::handle_keyboard_actions(RenderWindow& window /*,*/ /*Figu
 
 		if (flags.create_prototype)
 		{
+			Memento_handler::save(container, container_memento);
 			create_prototype_of_active_figure();
 			flags.create_prototype = false;
 		}
 
 		if (flags.change_size_flag) 
 		{
+			Memento_handler::save(container, container_memento);
 			set_size_from_console();
 			flags.change_size_flag = false;
 		}
-			
+		if (flags.serialize_figures) 
+		{
+			serialize();
+			flags.serialize_figures = false;
+			cout << endl;
+		}
 		if (flags.create_multiple_shape_flag) 
 		{
+			Memento_handler::save(container, container_memento);
 			create_agregate();
 			flags.create_multiple_shape_flag = false;
 		}
 		if (flags.change_color_flag) 
 		{
+			Memento_handler::save(container, container_memento);
 			set_color_from_console();
 			flags.change_color_flag = false;
 		}
@@ -163,6 +169,7 @@ void Controller_scena::handle_keyboard_actions(RenderWindow& window /*,*/ /*Figu
 
 void Controller_scena::print_menu() 
 {
+	Circle* circ = new Circle();
 	cout << "Up, Down, Left, Right - arrows\n"
 		<< "Add figure - 0\n"
 		<< "Change active figure - 1\n"
@@ -171,7 +178,8 @@ void Controller_scena::print_menu()
 		<< "Change color - 4\n"
 		<< "Clone active figure - 5\n"
 		<< "Drawing Mode Off - 6\n"
-		<< "Load previous state - 7\n";
+		<< "Load previous state - 7\n"
+		<< "Serialize - A\n";
 }
 
 void Controller_scena::draw_figures(RenderWindow& window)
@@ -236,7 +244,6 @@ void Controller_scena::set_color_from_console()
 		color =  Color(Color::Black); break;
 	}
 	container[curr_figure]->set_color(color);
-
 }
 
 void Controller_scena::set_size_from_console()
@@ -265,4 +272,12 @@ void Controller_scena::create_agregate()
 	container.push_back(new_comp);
 	curr_figure = container.size() - 1;
 	container[curr_figure]->set_as_active();
+}
+
+void Controller_scena::serialize()
+{
+	for (auto& shape : container) 
+	{
+		cout << shape->serialize()<<endl;
+	}
 }

@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "Keyboard_flag.h"
+#include "Memento_list.h"
 #include "Figure.h"
 
 using namespace sf;
@@ -18,6 +19,7 @@ private:
 	Controller_scena(Controller_scena const&) = delete;
 	Keyboard_flag flags;
 	vector<Figure*> container;
+	Memento_list* container_memento = new Memento_list();
 	int curr_figure = -1;
 public:
 	//Singletone
@@ -28,8 +30,6 @@ public:
 	void handle_key_pressed(Event& event, RenderWindow& window);
 
 	void handle_key_released(Event& event);
-
-	void handle_drawing_mode(RenderWindow& window);
 
 	void handle_events(Event& event, RenderWindow& window);
 
@@ -50,5 +50,6 @@ public:
 	void create_prototype_of_active_figure();
 	////
 	void create_agregate();
-
+	////
+	void serialize();
 };

@@ -1,7 +1,11 @@
 #pragma once
 #include "Figure.h"
+#include <iostream>
+#include <string>
+#include <sstream>
 #include "SFML/Graphics.hpp"
 using namespace sf;
+using namespace std;
 class Rectangle:public Figure
 {
 private:
@@ -15,6 +19,7 @@ public:
 	void set_color(Color color)override;
 	void move(float x, float y) override;
 	Figure* clone() override;
+	const string serialize()override;
 	void set_as_active()override;
 	void set_as_unactive()override;
 	float check_x(float x, float width);

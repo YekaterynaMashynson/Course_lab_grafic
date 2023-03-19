@@ -1,8 +1,11 @@
 #pragma once
 #include "SFML/Graphics.hpp"
 #include "Figure.h"
-using namespace std;
+#include <iostream>
+#include <string>
+#include <sstream>
 using namespace sf;
+using namespace std;
 class Composite:public Figure
 {
 	//realisation of pattern composite
@@ -18,6 +21,7 @@ public:
 	void set_color(Color color)override;
 	void set_as_active()override;
 	void set_as_unactive()override;
+	const string serialize()override;
 	void add_figure(Figure* figure);
 	Figure* clone()override;
 	void set_size()override;

@@ -1,5 +1,4 @@
 #include "Line.h"
-#include <iostream>
 using namespace std;
 
 Line::Line()
@@ -40,15 +39,30 @@ Figure* Line::clone()
 	return new Line(*this);
 }
 
+const string Line::serialize()
+{
+	stringstream str;
+	str <<"(Line:" << ' '
+		<< is_active << ' '
+		<< length << ' '
+		<< width << ' '
+		<< color.toInteger() << ' '
+		<< get_x() << ' '
+		<< get_y() <<")"<< ' ';
+	return str.str();
+}
+
 void Line::set_as_active()
 {
 	line.setOutlineThickness(1);
 	line.setOutlineColor(Color::Red);
+	is_active = true;
 }
 
 void Line::set_as_unactive()
 {
 	line.setOutlineColor(Color::Transparent);
+	is_active = false;
 }
 
 float Line::check_x(float x, float length)
@@ -76,6 +90,7 @@ void Line::set_size()
 	line.setSize(Vector2f(new_length, new_width));
 	length = new_length;
 	width = new_width;
+
 }
 
 float Line::get_x()

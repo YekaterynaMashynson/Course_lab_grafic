@@ -20,5 +20,5 @@ public:
 	bool previous_state_loaded = false; //7
 	bool load_key_pressed = false;
 	 
-	bool unite_in_agregate = false;
+	bool serialize_figures = false;
 };

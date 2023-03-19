@@ -56,6 +56,7 @@ void Composite::set_color(Color color)
 
 void Composite::set_as_active()
 {
+	is_active = true;
 	for (auto& shape : composite_figure)
 	{
 		shape->set_as_active();
@@ -64,10 +65,23 @@ void Composite::set_as_active()
 
 void Composite::set_as_unactive()
 {
+	is_active = false;
 	for (auto& shape : composite_figure)
 	{
 		shape->set_as_unactive();
 	}
+}
+
+const string Composite::serialize()
+{
+	stringstream str;
+	str << "{";
+	for (auto& shape : composite_figure) 
+	{
+		str << shape->serialize();
+	}
+	str << "}";
+	return str.str();
 }
 
 void Composite::add_figure(Figure* figure)
@@ -77,7 +91,7 @@ void Composite::add_figure(Figure* figure)
 
 Figure* Composite::clone()
 {
-	return new Composite(*this);
+	return new Composite(*this); 
 }
 
 void Composite::set_size()

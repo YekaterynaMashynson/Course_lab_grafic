@@ -1,7 +1,12 @@
 #pragma once
+//#include <fstream>
+#include <iostream>
+#include <string>
+#include <sstream>
 #include "Figure.h"
 #include "SFML/Graphics.hpp"
 using namespace sf;
+using namespace std;
 
 class Circle:public Figure
 {
@@ -22,5 +27,7 @@ public:
 	void set_size()override;
 	float get_x()override;
 	float get_y()override;
+	/*const string str_info();*/
+	const string serialize()override;
 };
 

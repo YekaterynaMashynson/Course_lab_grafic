@@ -1,5 +1,4 @@
 #include "Rectangle.h"
-#include <iostream>
 
 using namespace std;
 Rectangle::Rectangle()
@@ -44,14 +43,29 @@ Figure* Rectangle::clone()
 	return new Rectangle(*this);
 }
 
+const string Rectangle::serialize()
+{
+	stringstream str;
+	str <<"(Rectangle:" << ' '
+		<< is_active << ' '
+		<< width << ' '
+		<< height << ' '
+		<< color.toInteger() << ' '
+		<< get_x() << ' '
+		<< get_y() <<")" << ' ';
+	return str.str();
+}
+
 void Rectangle::set_as_active()
 {
+	is_active = true;
 	rectangle.setOutlineThickness(4);
 	rectangle.setOutlineColor(Color::Red);
 }
 
 void Rectangle::set_as_unactive()
 {
+	is_active = false;
 	rectangle.setOutlineColor(Color::Transparent);
 }
 

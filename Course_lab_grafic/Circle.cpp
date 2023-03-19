@@ -1,7 +1,5 @@
 #include "Circle.h"
-#include <iostream>
-//default circle
-using namespace std;
+
 
 Circle::Circle()
 {
@@ -44,13 +42,15 @@ Figure* Circle::clone()
 
 void Circle::set_as_active()
 {
-	circle.setOutlineThickness(10);
+	circle.setOutlineThickness(4);
 	circle.setOutlineColor(Color::Red);
+	is_active = true;
 }
 
 void Circle::set_as_unactive()
 {
 	circle.setOutlineColor(color);
+	is_active = false;
 }
 
 float Circle::check_x(float x, float width)
@@ -85,4 +85,28 @@ float Circle::get_x()
 float Circle::get_y()
 {
 	return area_y;
+}
+
+//const string Circle::str_info()
+//{
+//	stringstream str;
+//		str << "* " << "Circle"<<' '
+//				<<is_active<<' '
+//				<<color.toInteger()<<' '
+//				<<radius<<' '
+//				<<get_x()<<' '
+//				<<get_y()<<' ';
+//			return str.str();
+//}
+
+const string Circle::serialize()
+{
+	stringstream str;
+	str <<'(' << "Circle:" << ' '
+		<<is_active<<' '
+		<<radius<<' '
+		<< color.toInteger()<<' '
+		<<get_x()<<' '
+		<<get_y()<<')';
+	return str.str();
 }
