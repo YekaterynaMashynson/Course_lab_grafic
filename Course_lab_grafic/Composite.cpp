@@ -75,13 +75,20 @@ void Composite::set_as_unactive()
 const string Composite::serialize()
 {
 	stringstream str;
-	str << "{";
+	str << "{ ";
 	for (auto& shape : composite_figure) 
 	{
 		str << shape->serialize();
 	}
-	str << "}";
+	str << " }";
 	return str.str();
+}
+
+Composite* Composite::deserialize(string inf)
+{
+	Composite* des_composite = new Composite;
+	
+	return nullptr;
 }
 
 void Composite::add_figure(Figure* figure)

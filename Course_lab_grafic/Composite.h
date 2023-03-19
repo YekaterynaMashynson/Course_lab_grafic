@@ -22,6 +22,7 @@ public:
 	void set_as_active()override;
 	void set_as_unactive()override;
 	const string serialize()override;
+	Composite* deserialize(string inf);
 	void add_figure(Figure* figure);
 	Figure* clone()override;
 	void set_size()override;

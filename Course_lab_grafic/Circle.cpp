@@ -102,11 +102,29 @@ float Circle::get_y()
 const string Circle::serialize()
 {
 	stringstream str;
-	str <<'(' << "Circle:" << ' '
+	str <<'(' << "0" << ' '
 		<<is_active<<' '
 		<<radius<<' '
 		<< color.toInteger()<<' '
 		<<get_x()<<' '
 		<<get_y()<<')';
 	return str.str();
+}
+
+Circle* Circle::deserialize(string obj_inf)
+{
+	cout << "object string info" << obj_inf << endl;
+	stringstream str;
+	str << obj_inf;
+	bool active;
+	float pos_x;
+	float pos_y;
+	float radius;
+	int color;
+	str >> active >> radius >> color >> pos_x >> pos_y;
+	Circle* des_circle = new Circle(radius, Color(color));
+	des_circle->area_x = pos_x;
+	des_circle->area_y = pos_y;
+	des_circle->is_active = active;
+	return des_circle;
 }

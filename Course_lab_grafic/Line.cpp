@@ -42,7 +42,7 @@ Figure* Line::clone()
 const string Line::serialize()
 {
 	stringstream str;
-	str <<"(Line:" << ' '
+	str <<"( 2" << ' '
 		<< is_active << ' '
 		<< length << ' '
 		<< width << ' '
@@ -101,4 +101,23 @@ float Line::get_x()
 float Line::get_y()
 {
 	return area_y;
+}
+
+Line* Line::deserialize(string obj_inf)
+{
+	cout << "object string info" << obj_inf << endl;
+	stringstream str;
+	str << obj_inf;
+	bool active;
+	float pos_x;
+	float pos_y;
+	float lenth;
+	float width;
+	int color;
+	str >> active >> lenth>>width >> color >> pos_x >> pos_y;
+	Line* des_line = new Line(lenth,width,Color(color));
+	des_line->area_x = pos_x;
+	des_line->area_y = pos_y;
+	des_line->is_active = active;
+	return des_line;
 }

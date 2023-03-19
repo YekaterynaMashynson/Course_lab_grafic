@@ -29,5 +29,7 @@ public:
 	float get_y()override;
 	/*const string str_info();*/
 	const string serialize()override;
+	static Circle* deserialize(string obj_inf);
+	
 };
 
