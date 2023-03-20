@@ -46,7 +46,7 @@ Figure* Rectangle::clone()
 const string Rectangle::serialize()
 {
 	stringstream str;
-	str <<"( 1" << ' '
+	str <<"(1" << ' '
 		<< is_active << ' '
 		<< width << ' '
 		<< height << ' '
@@ -121,6 +121,7 @@ Rectangle* Rectangle::deserialize(string obj_inf)
 	Rectangle* des_rectangle = new Rectangle(width, height, Color(color));
 	des_rectangle->area_x = pos_x;
 	des_rectangle->area_y = pos_y;
+	des_rectangle->rectangle.setPosition(pos_x, pos_y);
 	des_rectangle->is_active = active;
 	return des_rectangle;
 }

@@ -115,8 +115,8 @@ void Controller_scena::handle_keyboard_actions(RenderWindow& window /*,*/ /*Figu
 {
 	if (flags.add_flag) 
 	{
+		Memento_handler::save(container, container_memento);
 		add_from_concole();
-		Memento_handler::save(container,container_memento );
 		flags.add_flag = false;
 	}
 	if (!is_empty()) 
@@ -156,6 +156,12 @@ void Controller_scena::handle_keyboard_actions(RenderWindow& window /*,*/ /*Figu
 			create_agregate();
 			flags.create_multiple_shape_flag = false;
 		}
+		if (flags.load_key_pressed && !flags.previous_state_loaded) 
+		{
+			cout << "load" << endl;
+			Memento_handler::load(container, container_memento);
+			flags.previous_state_loaded = true;
+		}
 		if (flags.change_color_flag) 
 		{
 			Memento_handler::save(container, container_memento);
@@ -169,7 +175,6 @@ void Controller_scena::handle_keyboard_actions(RenderWindow& window /*,*/ /*Figu
 
 void Controller_scena::print_menu() 
 {
-	Circle* circ = new Circle();
 	cout << "Up, Down, Left, Right - arrows\n"
 		<< "Add figure - 0\n"
 		<< "Change active figure - 1\n"

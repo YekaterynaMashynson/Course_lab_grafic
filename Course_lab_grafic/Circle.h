@@ -4,7 +4,7 @@
 #include <string>
 #include <sstream>
 #include "Figure.h"
-#include "SFML/Graphics.hpp"
+#include <SFML/Graphics.hpp>
 using namespace sf;
 using namespace std;
 

@@ -5,7 +5,7 @@ Circle::Circle()
 {
 	circle = CircleShape(50.0f);
 	this->color = Color::Cyan;
-	this->radius = 100.0f;
+	this->radius = 50.0f;
 	circle.setFillColor(color);
 }
 //from console
@@ -113,7 +113,7 @@ const string Circle::serialize()
 
 Circle* Circle::deserialize(string obj_inf)
 {
-	cout << "object string info" << obj_inf << endl;
+	cout << "object string info " << obj_inf << endl;
 	stringstream str;
 	str << obj_inf;
 	bool active;
@@ -125,6 +125,14 @@ Circle* Circle::deserialize(string obj_inf)
 	Circle* des_circle = new Circle(radius, Color(color));
 	des_circle->area_x = pos_x;
 	des_circle->area_y = pos_y;
-	des_circle->is_active = active;
+	des_circle->circle.setPosition(pos_x,pos_y);
+	if (active) 
+	{
+		des_circle->set_as_active();
+	}
+	else 
+	{
+		des_circle->set_as_unactive();
+	}
 	return des_circle;
 }

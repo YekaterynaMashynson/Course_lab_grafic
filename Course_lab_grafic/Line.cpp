@@ -42,7 +42,7 @@ Figure* Line::clone()
 const string Line::serialize()
 {
 	stringstream str;
-	str <<"( 2" << ' '
+	str <<"(2" << ' '
 		<< is_active << ' '
 		<< length << ' '
 		<< width << ' '
@@ -118,6 +118,7 @@ Line* Line::deserialize(string obj_inf)
 	Line* des_line = new Line(lenth,width,Color(color));
 	des_line->area_x = pos_x;
 	des_line->area_y = pos_y;
+	des_line->line.setPosition(pos_x, pos_y);
 	des_line->is_active = active;
 	return des_line;
 }

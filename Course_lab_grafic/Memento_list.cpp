@@ -28,3 +28,19 @@ void Memento_list::save_new_memo(string memo)
 	}
 	new_memo.close();
 }
+
+stringstream Memento_list::load_last_memo()
+{
+	stringstream stream;
+	if (!file_names.empty()) 
+	{
+		ifstream last_memo(file_names.back());
+		if (last_memo.is_open()) 
+		{
+			stream << last_memo.rdbuf();
+		}
+		remove(file_names.back().c_str());
+		file_names.pop_back();
+	}
+	return stream;
+}

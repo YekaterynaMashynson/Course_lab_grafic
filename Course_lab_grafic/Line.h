@@ -3,8 +3,7 @@
 #include <sstream>
 #include <iostream>
 #include <ostream>
-
-#include "SFML/Graphics.hpp"
+#include <SFML/Graphics.hpp>
 using namespace sf;
 using namespace std;
 class Line:public Figure

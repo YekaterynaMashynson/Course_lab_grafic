@@ -2,7 +2,7 @@
 
 Composite::Composite()
 {
-	composite_figure = vector<Figure*>();
+ 	composite_figure = vector<Figure*>();
 }
 
 Composite::Composite(vector<Figure*> agg)
@@ -75,20 +75,13 @@ void Composite::set_as_unactive()
 const string Composite::serialize()
 {
 	stringstream str;
-	str << "{ ";
+	str << "{"<<is_active;
 	for (auto& shape : composite_figure) 
 	{
 		str << shape->serialize();
 	}
-	str << " }";
+	str << "}";
 	return str.str();
-}
-
-Composite* Composite::deserialize(string inf)
-{
-	Composite* des_composite = new Composite;
-	
-	return nullptr;
 }
 
 void Composite::add_figure(Figure* figure)
@@ -117,5 +110,43 @@ float Composite::get_x()
 float Composite::get_y()
 {
 	return area_y;
+}
+
+Composite* Composite::deserialize(string &mementos)
+{
+	Composite* composite = new Composite(); 
+	if (mementos[1] == '1')
+	{
+		composite->is_active = true;
+	}
+	else
+	{
+		composite->is_active = false;
+	}
+	mementos.erase(0, 2);
+	while (mementos[0] != '}')
+	{
+		if (mementos[0] == '{')
+		{
+			composite->composite_figure.push_back(deserialize(mementos));
+		}  
+		if (mementos[0] == '(')
+		{
+			string str = mementos.substr(3, mementos.find_first_of(')'));
+			switch (mementos[1])
+			{
+			case '0':
+				mementos.erase(0, 2);    composite->composite_figure.push_back(Circle::deserialize(str));break;
+			case '1':
+				mementos.erase(0, 2);    composite->composite_figure.push_back(Rectangle::deserialize(str));break;
+			case '2':
+				mementos.erase(0, 2);    composite->composite_figure.push_back(Line::deserialize(str));break;
+			default:
+				break;
+			}
+			mementos.erase(0, mementos.find_first_of(')') + 1);
+		}
+	} mementos.erase(0, 1);
+	return composite;
 }
 

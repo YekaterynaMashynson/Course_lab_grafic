@@ -1,6 +1,9 @@
 #pragma once
-#include "SFML/Graphics.hpp"
+#include <SFML/Graphics.hpp>
 #include "Figure.h"
+#include"Circle.h"
+#include "Line.h"
+#include "Rectangle.h"
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -22,11 +25,11 @@ public:
 	void set_as_active()override;
 	void set_as_unactive()override;
 	const string serialize()override;
-	Composite* deserialize(string inf);
 	void add_figure(Figure* figure);
 	Figure* clone()override;
 	void set_size()override;
 	float get_x()override;
 	float get_y()override;
+	static Composite* deserialize(string& mementos);
 };
 

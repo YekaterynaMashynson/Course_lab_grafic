@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 #include <sstream>
-#include "SFML/Graphics.hpp"
+#include <SFML/Graphics.hpp>
 using namespace sf;
 using namespace std;
 class Rectangle:public Figure
