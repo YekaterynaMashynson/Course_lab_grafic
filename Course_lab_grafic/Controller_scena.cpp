@@ -160,6 +160,7 @@ void Controller_scena::handle_keyboard_actions(RenderWindow& window /*,*/ /*Figu
 		{
 			cout << "load" << endl;
 			Memento_handler::load(container, container_memento);
+			curr_figure = container.size() - 1;
 			flags.previous_state_loaded = true;
 		}
 		if (flags.change_color_flag) 
