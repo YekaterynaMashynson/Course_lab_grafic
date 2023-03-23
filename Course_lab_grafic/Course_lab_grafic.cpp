@@ -4,12 +4,15 @@
 #include <iostream>
 #include"SFML/Graphics.hpp"
 #include"Controller_scena.h"
+#include <Windows.h>
 
 
 using namespace sf;
 int main()
 {
-   RenderWindow window(VideoMode(750, 500), "Mashynson course work");
+	HWND consoleWindow = GetConsoleWindow();
+	SetWindowPos(consoleWindow, 0, 100, 100, 400, 600, SWP_NOZORDER | SWP_NOACTIVATE);
+    RenderWindow window(VideoMode(750, 500), "Mashynson course work");
 	Controller_scena& contr = Controller_scena::get_controler();
 	contr.print_menu();
 

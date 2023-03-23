@@ -10,7 +10,7 @@ Rectangle::Rectangle()
 	rectangle.setFillColor(color);
 }
 
-Rectangle::Rectangle(float width, float hight, Color color)
+Rectangle::Rectangle(float width, float height, Color color)
 {
 	this->width = width;
 	this->height = height;
@@ -46,13 +46,13 @@ Figure* Rectangle::clone()
 const string Rectangle::serialize()
 {
 	stringstream str;
-	str <<"(1" << ' '
+	str <<'('<<"1" << ' '
 		<< is_active << ' '
 		<< width << ' '
 		<< height << ' '
 		<< color.toInteger() << ' '
 		<< get_x() << ' '
-		<< get_y() <<")" << ' ';
+		<< get_y() <<')';
 	return str.str();
 }
 
@@ -106,9 +106,14 @@ float Rectangle::get_y()
 	return area_y;
 }
 
+bool Rectangle::activated()
+{
+	return is_active;
+}
+
 Rectangle* Rectangle::deserialize(string obj_inf)
 {
-	cout << "object string info" << obj_inf << endl;
+	//cout << "object string info" << obj_inf << endl;
 	stringstream str;
 	str << obj_inf;
 	bool active;
@@ -116,12 +121,19 @@ Rectangle* Rectangle::deserialize(string obj_inf)
 	float pos_y;
 	float width;
 	float height;
-	int color;
+	Uint32 color;
 	str >> active >> width >> height >> color >> pos_x >> pos_y;
 	Rectangle* des_rectangle = new Rectangle(width, height, Color(color));
 	des_rectangle->area_x = pos_x;
 	des_rectangle->area_y = pos_y;
 	des_rectangle->rectangle.setPosition(pos_x, pos_y);
-	des_rectangle->is_active = active;
+	if (active) 
+	{
+		des_rectangle->set_as_active();
+	}
+	else 
+	{
+		des_rectangle->set_as_unactive();
+	}
 	return des_rectangle;
 }

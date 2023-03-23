@@ -26,6 +26,7 @@ public:
 	void set_size()override;
 	float get_x()override;
 	float get_y()override;
+	bool activated() override;
 	static Line* deserialize(string obj_inf);
 };
 

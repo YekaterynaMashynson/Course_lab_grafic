@@ -22,33 +22,7 @@ void Controller_scena::handle_key_released(Event& event)
 	case sf::Keyboard::Down:    flags.down_flag = false; break;
 	case sf::Keyboard::Left:    flags.left_flag = false; break;
 	case sf::Keyboard::Right:    flags.right_flag = false; break;
-
-	case sf::Keyboard::A:		flags.serialize_figures = false; break;
-		//add
-	/*case sf::Keyboard::Num0:     flags.add_flag = false; break;
-	case sf::Keyboard::Num5:    flags.drawing_mode_on = false; break;*/
-		//switchNext
-	case sf::Keyboard::Num1: 
-	{
-		flags.switch_next_key_pressed = false;
-		flags.switched = false; 
-		break;
-	}
 	default: break;
-		//create multiple shape
-	case sf::Keyboard::Num2:     flags.create_multiple_shape_flag = false; break;
-		//changeSize
-	case sf::Keyboard::Num3:     flags.change_size_flag = false; break;
-		//changeColor
-	case sf::Keyboard::Num4:    flags.change_color_flag = false; break;
-		///
-
-		//load state
-	case sf::Keyboard::Num7: {
-		flags.load_key_pressed = false;
-		flags.previous_state_loaded = false;
-		break;
-	}
 	}
 }
 
@@ -65,22 +39,21 @@ void Controller_scena::handle_key_pressed(Event& event, RenderWindow& window)
 	case sf::Keyboard::Left:    flags.left_flag = true; break;
 	case sf::Keyboard::Right:  flags.right_flag = true; break;
 
-		//add
+		//add figure
 	case sf::Keyboard::Num0:    flags.add_flag = true; break;
-		//switchNext
+		//switch next
 	case sf::Keyboard::Num1:   flags.switch_next_key_pressed = true; break;
-		//create multiple shape
-	case sf::Keyboard::Num2: {flags.create_multiple_shape_flag = true; break; }
-						   //changeSize
+		//unite figures
+	case sf::Keyboard::Num2:   flags.create_agregate_figure_flag = true; break;
+		//change size
 	case sf::Keyboard::Num3:    flags.change_size_flag = true; break;
-		//changeColor
+		//change color
 	case sf::Keyboard::Num4:    flags.change_color_flag = true; break;
-		//drawingMode on
+		//create prototype
 	case sf::Keyboard::Num5:    flags.create_prototype = true; break;
-		//load state
-	case sf::Keyboard::Num7:    flags.load_key_pressed = true; break;
+		//load privious state
+	case sf::Keyboard::Num6:    flags.load_key_pressed = true; break;
 
-	case sf::Keyboard::A:		flags.serialize_figures = true; break;
 	default: break;
 	}
 }
@@ -111,7 +84,7 @@ void Controller_scena::handle_events(Event& event, RenderWindow& window)
 	}
 }
 
-void Controller_scena::handle_keyboard_actions(RenderWindow& window /*,*/ /*FigureContainer* container, MementoList* mementos*/) 
+void Controller_scena::handle_keyboard_actions(RenderWindow& window) 
 {
 	if (flags.add_flag) 
 	{
@@ -137,38 +110,59 @@ void Controller_scena::handle_keyboard_actions(RenderWindow& window /*,*/ /*Figu
 			create_prototype_of_active_figure();
 			flags.create_prototype = false;
 		}
-
+		
 		if (flags.change_size_flag) 
 		{
 			Memento_handler::save(container, container_memento);
 			set_size_from_console();
 			flags.change_size_flag = false;
 		}
-		if (flags.serialize_figures) 
-		{
-			serialize();
-			flags.serialize_figures = false;
-			cout << endl;
-		}
-		if (flags.create_multiple_shape_flag) 
+		
+		if (flags.create_agregate_figure_flag) 
 		{
 			Memento_handler::save(container, container_memento);
 			create_agregate();
-			flags.create_multiple_shape_flag = false;
+			flags.create_agregate_figure_flag = false;
 		}
-		if (flags.load_key_pressed && !flags.previous_state_loaded) 
+		
+		if (flags.load_key_pressed) 
 		{
 			cout << "load" << endl;
 			Memento_handler::load(container, container_memento);
-			curr_figure = container.size() - 1;
-			flags.previous_state_loaded = true;
+			if (is_empty()) 
+			{
+				cout << "container is empty, you must add figure" << endl;
+			}
+			else
+			{
+				for (int i = 0; i < container.size(); i++)
+				{
+					if (container[i]->activated() == true)
+					{
+						curr_figure = i;
+						break;
+					}
+				}
+			}
+			flags.load_key_pressed = false;
 		}
+		
 		if (flags.change_color_flag) 
 		{
 			Memento_handler::save(container, container_memento);
 			set_color_from_console();
 			flags.change_color_flag = false;
 		}
+		
+		if (container.size() > 1) 
+		{
+			if (flags.switch_next_key_pressed) 
+			{
+				switch_next();
+				flags.switch_next_key_pressed = false;
+			}
+		}
+		
 		draw_figures(window);
 	}
 	
@@ -179,13 +173,11 @@ void Controller_scena::print_menu()
 	cout << "Up, Down, Left, Right - arrows\n"
 		<< "Add figure - 0\n"
 		<< "Change active figure - 1\n"
-		<< "Unite shapes - 2\n"
+		<< "Unite figures - 2\n"
 		<< "Change size - 3\n"
 		<< "Change color - 4\n"
 		<< "Clone active figure - 5\n"
-		<< "Drawing Mode Off - 6\n"
-		<< "Load previous state - 7\n"
-		<< "Serialize - A\n";
+		<< "Load previous state - 6\n";
 }
 
 void Controller_scena::draw_figures(RenderWindow& window)
@@ -208,7 +200,6 @@ void Controller_scena::add_from_concole()
 	Figure* new_figure;
 	switch (choice) 
 	{
-		//add posipility to chose color and size from concole
 	case 0: new_figure = new Circle(); break;
 	case 1:new_figure = new Rectangle(); break;
 	case 2: new_figure = new Line(); break;
@@ -217,18 +208,26 @@ void Controller_scena::add_from_concole()
 		break;
 	}
 	container.push_back(new_figure);
+	if (container.size() > 1) 
+	{
+		container[curr_figure]->set_as_unactive();
+	}
 	curr_figure = container.size() - 1;
 	container[curr_figure]->set_as_active();
-	if (container.size() > 1) {
-		container[curr_figure - 1]->set_as_unactive();
-	}
-	//function - set as an active and current selected
 	cout << "--------------------------" << endl;
 }
 
 bool Controller_scena::is_empty()
 {
-	return container.size() < 1;
+	if (container.size() < 1)
+	{
+		flags.add_flag = true;
+		return true;
+    }
+	else 
+	{
+		return false;
+	}
 }
 
 void Controller_scena::set_color_from_console()
@@ -280,10 +279,17 @@ void Controller_scena::create_agregate()
 	container[curr_figure]->set_as_active();
 }
 
-void Controller_scena::serialize()
+void Controller_scena::switch_next()
 {
-	for (auto& shape : container) 
+	if (curr_figure == -1)
 	{
-		cout << shape->serialize()<<endl;
+		curr_figure = 0;
 	}
+	container[curr_figure]->set_as_unactive();
+	curr_figure++;
+	if (curr_figure >= container.size())
+	{
+		curr_figure = 0;
+	}
+	container[curr_figure]->set_as_active();
 }

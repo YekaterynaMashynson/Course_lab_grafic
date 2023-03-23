@@ -32,10 +32,10 @@ void Memento_handler::load(vector<Figure*>& new_contr, Memento_list*mementos)
 			switch (shape_inf[1])
 			{
 			case '0':
-				cout << "Creating circle";
+				cout << "Creating circle"<<endl;
 			    new_contr.push_back(Circle::deserialize(str));break;  
 			case '1':
-				cout << "Creating rectangle";
+				cout << "Creating rectangle"<<endl;
 			    new_contr.push_back(Rectangle::deserialize(str));break;
 			case '2':
 				cout << "Creating line";

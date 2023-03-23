@@ -112,6 +112,11 @@ float Composite::get_y()
 	return area_y;
 }
 
+bool Composite::activated()
+{
+	return is_active;
+}
+
 Composite* Composite::deserialize(string &mementos)
 {
 	Composite* composite = new Composite(); 

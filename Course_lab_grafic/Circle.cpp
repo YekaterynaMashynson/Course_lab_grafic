@@ -87,6 +87,11 @@ float Circle::get_y()
 	return area_y;
 }
 
+bool Circle::activated()
+{
+	return is_active;
+}
+
 //const string Circle::str_info()
 //{
 //	stringstream str;
@@ -113,14 +118,14 @@ const string Circle::serialize()
 
 Circle* Circle::deserialize(string obj_inf)
 {
-	cout << "object string info " << obj_inf << endl;
+	//cout << "object string info " << obj_inf << endl;
 	stringstream str;
 	str << obj_inf;
 	bool active;
 	float pos_x;
 	float pos_y;
 	float radius;
-	int color;
+	Uint32 color;
 	str >> active >> radius >> color >> pos_x >> pos_y;
 	Circle* des_circle = new Circle(radius, Color(color));
 	des_circle->area_x = pos_x;

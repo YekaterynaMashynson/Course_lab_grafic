@@ -3,9 +3,10 @@ using namespace std;
 
 Line::Line()
 {
-	line = RectangleShape(Vector2f(170, 4));
+	line = RectangleShape(Vector2f(190, 4));
 	this->length = 190;
 	this->width = 4;
+	this->color = Color::Green;
 	line.setFillColor(Color::Green);
 }
 
@@ -14,6 +15,8 @@ Line::Line(float length, float width, Color color)
 	this->length = length;
 	this->width = width;
 	this->color = color;
+	line = RectangleShape(Vector2f(length, width));
+	line.setFillColor(color);
 }
 
 void Line::draw(RenderWindow& window)
@@ -42,13 +45,13 @@ Figure* Line::clone()
 const string Line::serialize()
 {
 	stringstream str;
-	str <<"(2" << ' '
+	str << '('<<"2" << ' '
 		<< is_active << ' '
 		<< length << ' '
 		<< width << ' '
 		<< color.toInteger() << ' '
 		<< get_x() << ' '
-		<< get_y() <<")"<< ' ';
+		<< get_y() <<')';
 	return str.str();
 }
 
@@ -103,9 +106,13 @@ float Line::get_y()
 	return area_y;
 }
 
+bool Line::activated()
+{
+	return is_active;
+}
+
 Line* Line::deserialize(string obj_inf)
 {
-	cout << "object string info" << obj_inf << endl;
 	stringstream str;
 	str << obj_inf;
 	bool active;
@@ -113,12 +120,19 @@ Line* Line::deserialize(string obj_inf)
 	float pos_y;
 	float lenth;
 	float width;
-	int color;
+	Uint32 color;
 	str >> active >> lenth>>width >> color >> pos_x >> pos_y;
 	Line* des_line = new Line(lenth,width,Color(color));
 	des_line->area_x = pos_x;
 	des_line->area_y = pos_y;
 	des_line->line.setPosition(pos_x, pos_y);
-	des_line->is_active = active;
+	if (active) 
+	{
+		des_line->set_as_active();
+	}
+	else 
+	{
+		des_line->set_as_unactive();
+	}
 	return des_line;
 }

@@ -9,12 +9,17 @@ using namespace std;
 const float SMOOTH_DISTANCE = 0.1;
 class Controller_scena
 {
-
 private:
-	
 	//making private constructor for Singletone
 	Controller_scena(){}
-	~Controller_scena() {}
+	~Controller_scena() 
+	{
+		delete container_memento;
+		for (int index = 0; index < container.size(); ++index)
+		{
+			delete container[index];
+		}
+	}
 	Controller_scena& operator=(Controller_scena&)=delete;
 	Controller_scena(Controller_scena const&) = delete;
 	Keyboard_flag flags;
@@ -25,16 +30,16 @@ public:
 	//Singletone
 	static Controller_scena& get_controler();
 	//other functions of the controller
-	
 
+	////
 	void handle_key_pressed(Event& event, RenderWindow& window);
-
+	////
 	void handle_key_released(Event& event);
-
+	////
 	void handle_events(Event& event, RenderWindow& window);
-
-	void handle_keyboard_actions(RenderWindow& window /*,*/ /*FigureContainer* container, MementoList* mementos*/);
-
+	////
+	void handle_keyboard_actions(RenderWindow& window);
+	////
 	void print_menu();
 	///
 	void draw_figures(RenderWindow& window);
@@ -51,5 +56,5 @@ public:
 	////
 	void create_agregate();
 	////
-	void serialize();
+	void switch_next();
 };

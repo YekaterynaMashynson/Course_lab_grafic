@@ -27,6 +27,7 @@ public:
 	void set_size()override;
 	float get_x()override;
 	float get_y()override;
+	bool activated() override;
 	static Rectangle* deserialize(string obj_inf);
 };
 

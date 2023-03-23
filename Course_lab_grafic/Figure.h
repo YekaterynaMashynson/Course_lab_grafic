@@ -23,6 +23,7 @@ public:
 	// Figure cloning ( Prototype)
 	virtual Figure* clone() = 0;
 	/// 
+	virtual bool activated() = 0;
 	virtual void set_as_active() = 0;
 	virtual void set_as_unactive() = 0;
 };
