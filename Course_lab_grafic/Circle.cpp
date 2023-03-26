@@ -1,6 +1,5 @@
 #include "Circle.h"
 
-
 Circle::Circle()
 {
 	circle = CircleShape(50.0f);
@@ -8,7 +7,7 @@ Circle::Circle()
 	this->radius = 50.0f;
 	circle.setFillColor(color);
 }
-//from console
+
 Circle::Circle(float radius, Color color)
 {
 	circle = CircleShape(radius);
@@ -74,7 +73,6 @@ void Circle::set_size()
 	cin >> new_radius;
 	circle.setRadius(new_radius);
 	radius = circle.getRadius();
-	/*circle.setScale(2,2);*//*setScale(circle.getScale() + sf::Vector2f(0.0001f, 0.0001f));*/
 }
 
 float Circle::get_x()
@@ -92,18 +90,6 @@ bool Circle::activated()
 	return is_active;
 }
 
-//const string Circle::str_info()
-//{
-//	stringstream str;
-//		str << "* " << "Circle"<<' '
-//				<<is_active<<' '
-//				<<color.toInteger()<<' '
-//				<<radius<<' '
-//				<<get_x()<<' '
-//				<<get_y()<<' ';
-//			return str.str();
-//}
-
 const string Circle::serialize()
 {
 	stringstream str;
@@ -118,7 +104,6 @@ const string Circle::serialize()
 
 Circle* Circle::deserialize(string obj_inf)
 {
-	//cout << "object string info " << obj_inf << endl;
 	stringstream str;
 	str << obj_inf;
 	bool active;

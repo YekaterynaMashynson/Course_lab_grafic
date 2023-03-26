@@ -113,7 +113,6 @@ bool Rectangle::activated()
 
 Rectangle* Rectangle::deserialize(string obj_inf)
 {
-	//cout << "object string info" << obj_inf << endl;
 	stringstream str;
 	str << obj_inf;
 	bool active;
