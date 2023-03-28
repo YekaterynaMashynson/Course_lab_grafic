@@ -120,9 +120,16 @@ void Controller_scena::handle_keyboard_actions(RenderWindow& window)
 		
 		if (flags.create_agregate_figure_flag) 
 		{
-			Memento_handler::save(container, container_memento);
-			create_agregate();
-			flags.create_agregate_figure_flag = false;
+			if (container.size() == 1) 
+			{
+				flags.create_agregate_figure_flag = false;
+			}
+			else 
+			{
+				Memento_handler::save(container, container_memento);
+				create_agregate();
+				flags.create_agregate_figure_flag = false;
+			}
 		}
 		
 		if (flags.load_key_pressed) 
@@ -268,12 +275,60 @@ void Controller_scena::create_prototype_of_active_figure()
 
 void Controller_scena::create_agregate()
 {
+	container[curr_figure]->set_as_unactive();
 	Composite* new_comp = new Composite();
-	for (auto& shape : container)
+	vector<int> numbers;
+	bool cont = true;
+	int n;
+	cout << "When adding figures to the composite is finished enter - 1" << endl;
+	while (cont) 
 	{
-		new_comp->add_figure(shape);
+		cout << "Choose figure indexes from 0 to " << container.size() - 1 << " that you want to add to the composite = ";
+		cin >> n;
+		if (n == -1) 
+		{
+			if (numbers.size() <= 1)
+			{
+				cout << "Agregate must be created by at least two figures " << endl;
+			}
+			else
+			{
+				cont = false;
+				cout << "Composite was created" << endl;
+				break;
+			}
+		}
+		if (n > -1 && n < container.size()) 
+		{
+			if (find(numbers.begin(), numbers.end(), n)!=numbers.end()) 
+			{
+				cout << "This element is already added to the composite" << endl;
+			}
+			else 
+			{
+				numbers.push_back(n);
+				cout << "Element was added to the composite" << endl;
+			}
+		}
+		else if(n!=-1)
+		{
+			cout << "Incorrect value" << endl;
+		}
+		if (numbers.size() == container.size())
+		{
+			cont = false;
+			cout << "Composite was created" << endl;
+		}
 	}
-	container.erase(container.begin(), container.end());
+	for (int i = 0; i < numbers.size(); i++) 
+	{
+		new_comp->add_figure(container[numbers[i]]);
+	}
+	sort(numbers.begin(), numbers.end(), greater<int>());
+	for (int i : numbers)
+	{
+		container.erase(container.begin() + i);
+	}
 	container.push_back(new_comp);
 	curr_figure = container.size() - 1;
 	container[curr_figure]->set_as_active();
